@@ -1,0 +1,638 @@
+student
+
+states/properties/data:
+rollNo;
+name;
+age;
+marks;
+
+behaviors/methods/functions:
+
+learning();
+playing();
+writing();
+reading();
+givingExam();
+
+=================================
+
+
+
+
+class String
+{
+} 
+
+
+1
+Ram
+21
+78.5
+
+stud1
+
+
+Constructor
+================
+
+It is a function of the class.
+Its name is similar to the class name.
+There is no return type for constructor.
+Used to initialize the data of the object at the time of creation of object.
+
+default values
+Number - 0
+Reference variable - null
+char - null character
+boolean - false
+
+new Student(1,"Ram",21,75.5);
+
+Student(int rn, String n, int a, double m)
+{
+}
+
+. (dot) is called member access operator.
+
+referenced object : The object which is being referenced by the reference
+variable.
+
+
+
+int arr[];
+arr = new int[5];
+
+int arr[];
+arr = new int[5];
+
+
+Student arr[];
+arr = new Student[5]; //Array for storing references of Student objects. It is not creating objects.
+
+Student stud1;
+
+arr[0] = new Student(1,"Ram",21,75.5);
+
+
+
+
+
+
+arr[1] = new Student(2,"Shyam",22,65.0);
+
+int r;
+String n;
+int a;
+double m;
+
+java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+for(int i = 0; i < 5; i++)
+{
+	System.out.println("Enter roll,name,age and marks");
+	r = sc.nextInt();
+	n = sc.next();
+	a = sc.nextInt();
+	m = sc.nextDouble();
+
+	arr[i] = new Student(r,n,a,m);
+}
+
+
+object-reference.method();
+
+arr[0].printDetails();
+arr[1].printDetails();
+
+for(int i = 0; i < 5; i++)
+{
+	arr[i].printDetails();
+}
+
+
+
+
+Console:
+Please enter details for 5 students.
+Please enter roll, name, age and marks
+1
+Ram
+21
+75.5
+Please enter roll, name, age and marks
+2
+Shyam
+22
+65.0
+
+import java.util.Scanner;
+
+Scanner sc ;
+sc = new Scanner(System.in);
+
+
+//Scanner sc = new Scanner(System.in);
+int val = sc.nextInt();	//Read integer value
+
+nextInt();
+nextDouble();
+
+String str = sc.next();	//To read a string without space
+
+String str = sc.nextLine(); // To read a line
+
+
+Filename: StaticMethod.java
+//To access the static variable we don't need to create any object.
+// Non-static member - means related to object so we need object for that.
+// Static member - means related to entire class so we do not need object for that. We need class only.
+
+class Test
+{
+	static int a ;			//It is also known as class variable/data
+	int b;				//non-static or instance variable
+	int c;				//non-static or instance variable
+
+	{
+		//non-static block : will be called each and every time when any object is created.
+		System.out.println("Within non-static block");
+		b = 5;
+		c = 10;
+	}
+
+	static
+	{
+		//static block : Used to initialize or give value to the static data.
+		//This block is executed only once at the time of loading of class.
+
+		System.out.println("Within static block");
+		a = 20;
+	}
+
+	Test()
+	{
+		System.out.println("No argument constructor");
+	}
+
+	void fun()
+	{
+		s.o.p(a);				//Works
+		System.out.println("fun of Test");
+
+	}
+
+	//static function (class method) is mainly used to work upon static data.
+	static void anotherFun()	
+	{
+		s.o.p(a);
+		s.o.p(b);		// Error
+		s.o.p(c);		// Error
+		fun();			// Error
+		System.out.println("anotherFun of Test");
+	}
+
+}
+
+class StaticDemo
+{
+	public static void main(String args[])
+	{
+		//new Test();	
+		Test.anotherFun();
+		//new Test();
+		
+	}	
+}
+
+1. Static member (data and functions) can be accessed using class name or object.
+2. Any non-static method can access static data.
+3. Can any static method access the non-static (instance variable) data? NO
+4. A static method can access/use only static data and methods.
+
+5. Static block is used to initialize the static data members.
+6. Static block is executed only once whenever class is first time used (loaded).
+7. We can access any static part of the class from the non-static context (static block or method) but reverse is not true. Meaning we can not access any non-static part of the class from the static context (non-static block or method) 
+
+
+Use of "this" keyword
+=======================
+
+
+'this' always keeps the reference of the current object.
+Q. When we say current object what does it mean?
+A. Current object is the object which has currently called the method. The object which is currently in action.
+
+Local variable is a variable which is declared either as a parameter of the function or inside the function itself.
+
+We can make difference between local and instance variable by using this.
+
+We can call constructor using this. If we use this() to call the constructor then that must be the very first statement within constructor otherwise compiler will give error.
+
+Calling constructor using this should always be inside a constructor.
+
+Variable shadowing: When local and instance have same name then local variable hides the instance variable or we can say instance variable is being shadowed by the local variable.
+
+
+class Test
+{			
+	int b;				
+	int c;
+				
+
+	Test()
+	{
+		System.out.println("No argument constructor");
+		b = 1;
+		c = 1;
+	}
+
+	Test (int b)
+	{
+		this();	//calling zero arg constructor using this.
+
+		System.out.println("One argument constructor");
+		
+		this.b = b;	
+	}
+
+	Test(int b, int c)		//Example of variable of shadowing
+	{
+		this(b); //Calling one argument constructor
+
+		System.out.println("Two argument constructor");
+		b = b;
+		c = c;
+	}
+
+	void fun()
+	{
+		
+		//this();  //Error, calling constructor using this should always be inside a constructor.
+		System.out.println("fun of Test");
+		System.out.println(this.b);
+		System.out.println(this.c);
+	}
+}
+
+class StaticDemo
+{
+	public static void main(String args[])
+	{
+		Test t1 = new Test(5,10);
+		Test t2 = new Test(15);	
+		Test t3 = new Test();
+		t1.fun();
+		t2.fun();		
+	}	
+}
+
+Method Overloading
+=====================
+
+We can define multiple methods with the same name inside a class provided they should differ in terms of their parameter. It means parameter should differ in terms of number of parameters or type of parameters. This is called method/function overloading.
+
+Defining multiple constructors inside a class is also an example of method overloading.
+
+class AddCalculator
+{
+	int add(int x, int y)
+	{
+		int res = x + y;
+		return res;
+	}
+
+	double add(double x, double y)
+	{
+		double res = x + y;
+		return res;
+	}
+		
+}
+
+class AddCalculatorDemo
+{
+	public static void main(String args[])
+	{
+		AddCalculator calc = new AddCalculator();
+		int res = calc.add(3,5);
+		System.out.println(res);	//Prints 8
+
+		double res1 = calc.add(5.5,8.8);
+		System.out.println(res1);	//Prints 14.3
+	}
+}
+
+
+
+
+Function calling: Call by Value and Call by Reference
+=========================================================
+
+Primitive data are passed by value. Changes in data will not reflect in actual data.
+
+Objects are passed by using reference but that reference is passed by value. So if we make any change using that reference, that will also be reflected in the actual object whose reference has been passed.
+
+class First
+{
+	int a;
+	int b;
+
+	First(int a, int b)
+	{
+		this.a = a;
+		this.b = b;
+	}
+
+}
+
+
+
+class Second
+{
+
+	void change(int x, int y)
+	{
+		x = x + 1;		// x = 6
+		y = y + 1;		// y = 11
+	}
+
+	void change(First first)				
+	{
+		first.a = first.a + 1; // 51
+		first.b = first.b + 1; // 101
+	}
+}
+
+class FunctionCallDemo
+{
+	public static void main(String args[])
+	{
+		int p = 5;
+		int q = 10;
+
+		System.out.println(p);		//Prints 5
+		System.out.println(q);		//Prints 10
+
+		Second s = new Second();
+		s.change(p,q);
+
+		System.out.println(p);		//Prints 5
+		System.out.println(q);		//Prints 10
+
+		
+		First f = new First(50,100); 
+		System.out.println(f.a);	//Prints 50
+		System.out.println(f.b);	//Prints 100
+
+		s.change(f);
+
+		System.out.println(f.a);	//Prints 51
+		System.out.println(f.b);	//Prints 101
+
+	}
+}
+
+
+
+
+change(p,q);
+void change(int x, int y)
+
+int x = p;
+int y = q;
+
+
+Packages
+==========
+A package is a collection of related classses.
+ex. java.lang, java.util, java.io, java.sql etc.
+
+java -> util -> Scanner.class
+
+import java.lang.*;	//It is by default imported by java and we do not need to import it explicitly.
+import java.util.Scanner;
+
+
+Creating our own package and using it
+======================================
+
+create a package (directory) mypack.
+Inside mypack, we will put two classes - First and Second
+We will use this package 'mypack' in our program.
+
+
+mkdir src
+cd src
+mkdir mypack
+
+====================================
+[First.java]
+
+package mypack;
+
+class First
+{
+        void fun()
+        {
+                System.out.println("fun of First");
+        }
+}
+
+====================================
+[Second.java]
+
+package mypack;
+
+class Second
+{
+        void anotherFun()
+        {
+                System.out.println("anotherFun of Second");
+        }
+} 
+====================================
+[UseFirstSecond.java]
+
+import mypack.*;
+
+class UseFirstSecond
+{
+        public static void main(String args[])
+        {
+                First f = new First();
+                Second s = new Second();
+                f.fun();
+                s.anotherFun();
+        }
+}
+
+===================================
+
+We are in src folder
+javac mypack/First.java
+javac mypack/Second.java
+javac UseFirstSecond.java
+java UseFirstSecond
+
+OUTPUT:
+fun of First
+anotherFun of Second
+
+Using jar
+============
+jar cf mypack.jar mypack
+javac -cp <path to mypack.jar>:. UseFirstSecond.java
+java -cp <path to mypack.jar>:. UseFirstSecond 
+
+OUTPUT:
+fun of First
+anotherFun of Second
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
